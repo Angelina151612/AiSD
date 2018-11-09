@@ -10,15 +10,15 @@ using namespace std;
 int F(char *str,int *i, Array_stack * S){
 	int a,b,res;
 
-	if ((str[*i] >= '0') && (str[*i] <= '9') ) { 						    //если цифра от 0 до 9 
+	if ((str[*i] >= '0') && (str[*i] <= '9') ) { 		//если цифра от 0 до 9 
 		S->push(str[*i]);
 		cout << "pushed:" << str[*i] << endl;
 		return 0;																		 
 	}
 
 	if ((str[*i] == 'M')  && (str[*i+1] == '(') ) { 
-		*i=(*i)+2;                      						   //если М и за ней (
-		if((F(str, i, S) == 0) && (str[*i+1] == ','))	{	   		       //ищем первый аргумент
+		*i=(*i)+2;                      				 //если М и за ней (
+		if((F(str, i, S) == 0) && (str[*i+1] == ','))	{	  //ищем первый аргумент
 			*i=(*i)+2;
 			if((F(str, i, S) == 0) && (str[*i+1] == ')')){
 				a = S->pop();
@@ -29,15 +29,14 @@ int F(char *str,int *i, Array_stack * S){
 				S->push(res);
 				cout << "pushed:" << res - 48 << endl;
 				*i=(*i)+1;
-				//S->push(max(S->pop(), S->pop()));
 				return 0;
 			}	
 		}
 	}
 
 	if ((str[*i] == 'm')  && (str[*i+1] == '(') ) { 
-		*i=(*i)+2;                                 						   //если m и за ней (
-		if((F(str, i, S) == 0) && (str[*i+1] == ','))	{	   		       //ищем первый аргумент
+		*i=(*i)+2;                                 			 //если m и за ней (
+		if((F(str, i, S) == 0) && (str[*i+1] == ','))	{	 //ищем первый аргумент
 			*i=(*i)+2;
 			if((F(str, i, S) == 0) && (str[*i+1] == ')')){
 					a = S->pop();
@@ -48,7 +47,6 @@ int F(char *str,int *i, Array_stack * S){
 				S->push(res);
 				cout << "pushed:" << res - 48 << endl;
 				*i=(*i)+1;
-				//S->push(min(S->pop(), S->pop()));
 				return 0;
 			}	
 		}
@@ -59,11 +57,7 @@ int F(char *str,int *i, Array_stack * S){
 
 
 int main(){
-	//SetConsoleCP(1251);
-	//SetConsoleOutputCP(1251);	
- 
 char ch;
-//char str[30];
 int i = 0;
 int size = 10;
 char *str = new char [size];
@@ -99,11 +93,14 @@ while(1){
 
 i=0;
 
+int result = F(str, &i, &S);
 
-if(F(str, &i, &S) == 0)
-	cout << "Результат: " << S.pop() <<endl;
-else
+if((str[i+1] != '\0') || (result != 0))
 	cout << "Строка некорректна! ";
+
+else if(result== 0)
+	cout << "Результат: " << S.pop() <<endl;
+
 delete []str;
 return 0;
 }
